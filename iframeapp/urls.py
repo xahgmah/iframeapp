@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from iframeapp.views import iframe_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', iframe_view),
+
 ]

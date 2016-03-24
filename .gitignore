@@ -57,9 +57,10 @@ docs/_build/
 # PyBuilder
 target/
 
+# Database
+*.sqlite3
 
-raccoonGang
-raccoonGang.pub
+
 project.db
 project.sql
 local_settings.py
