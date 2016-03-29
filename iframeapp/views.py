@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from utils import DESCipher
+from utils import DESCipher, xor_crypt_string
 from django.conf import settings
 import json
 
@@ -8,8 +8,7 @@ def iframe_view(request):
     data = request.META.get("QUERY_STRING")
     if data:
         try:
-            ac = DESCipher(settings.REDDIT_SECRET_KEY)
-            row = ac.decrypt(data[5:])
+            row = xor_crypt_string(data[5:], settings.REDDIT_SECRET_KEY, decode=True)
             data = json.loads(row)
             result = """
             Hellow %s<br/>

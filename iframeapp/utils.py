@@ -25,13 +25,12 @@ class DESCipher(object):
         return s[:-ord(s[len(s) - 1:])]
 
 
-
-a = '{"course_id": "course-v1:test2+test2+test2", "username": "admin", "email": "xahgmah@yandex.ru"}'
-key = "123456789012346"
-print "ROW -  " + a
-dc = DESCipher(key)
-encoded = dc.encrypt(a)
-print "KEY -  " + dc.key
-print "ENCODED -  " + encoded
-decoded = dc.decrypt(encoded)
-print "DECODE -  " + decoded
+def xor_crypt_string(data, key, encode=False, decode=False):
+    from itertools import izip, cycle
+    import base64
+    if decode:
+        data = base64.b64decode(data)
+    xored = ''.join(chr(ord(x) ^ ord(y)) for (x, y) in izip(data, cycle(key)))
+    if encode:
+        return base64.b64encode(xored).strip()
+    return xored
