@@ -3,6 +3,7 @@ from utils import DESCipher, xor_crypt_string
 from django.conf import settings
 import json
 
+
 def iframe_view(request):
     response = HttpResponse()
     data = request.META.get("QUERY_STRING")
@@ -11,13 +12,13 @@ def iframe_view(request):
             row = xor_crypt_string(data[5:], settings.REDDIT_SECRET_KEY, decode=True)
             data = json.loads(row)
             result = """
-            Hellow %s<br/>
+            Hello %s<br/><br/>
             This is your details:<br/>
-            name: %s,<br/>
-            email: %s,<br/>
-            course: %s<br/>
+            Name: %s,<br/>
+            Email: %s,<br/>
+            Course: %s<br/><br/>
             Happy learning!
-            """ % (data.get("username"),data.get("username"),data.get("email"),data.get("course_id"))
+            """ % (data.get("username"), data.get("username"), data.get("email"), data.get("course_id"))
         except Exception as e:
             result = "<span style='color:red'>%s</span>" % e.message
     else:
