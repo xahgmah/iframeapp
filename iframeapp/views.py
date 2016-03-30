@@ -1,15 +1,17 @@
+import urllib
+
 from django.http import HttpResponse
-from utils import DESCipher, xor_crypt_string
+from utils import AESCipher
 from django.conf import settings
 import json
 
 
 def iframe_view(request):
     response = HttpResponse()
-    data = request.META.get("QUERY_STRING")
+    data = str(request.GET.get('data'))
     if data:
         try:
-            row = xor_crypt_string(data[5:], settings.REDDIT_SECRET_KEY, decode=True)
+            row = AESCipher(settings.REDDIT_SECRET_KEY).decrypt(data)
             data = json.loads(row)
             result = """
             Hello %s<br/><br/>
